@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './LandingPage.css'
-import applogo from '../assets/applogo.png';
 
 const categories = [
   { name: 'Sarees', icon: '🥻' },
@@ -50,10 +49,7 @@ export default function LandingPage() {
     <div className="landing-root">
       {/* Sticky Header */}
       <header className="landing-header">
-        <div className="logo">
-          <img src={applogo} alt="ReWear Logo" className="app-logo-img" />
-          <span className="logo-text">ReWear</span>
-        </div>
+        <div className="logo">ReWear</div>
         <nav>
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/browse" className="nav-link">Browse</Link>
