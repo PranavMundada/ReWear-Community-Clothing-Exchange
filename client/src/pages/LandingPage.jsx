@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 
+// Import local assets
+import sareeImage from '../assets/saree.jpg';
+import sherwaniImage from '../assets/sherwani.jpg';
+import kurtaImage from '../assets/kurta.jpg';
+import imagesImage from '../assets/images.jpg';
+import casualshoesImage from '../assets/casualshoes.jpg';
+import jhootimenImage from '../assets/jhootimen.jpg';
+
 const categories = [
   { name: 'Sarees', icon: '🥻', color: '#FF6B6B' },
   { name: 'Lehengas', icon: '👗', color: '#4ECDC4' },
@@ -17,38 +25,59 @@ const featuredItems = [
   {
     title: 'Red Bridal Saree',
     category: 'Sarees',
-    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
+    image: sareeImage,
     points: 150,
     condition: 'Excellent'
   },
   {
     title: 'Designer Lehenga',
     category: 'Lehengas',
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
+    image: imagesImage,
     points: 200,
     condition: 'Like New'
   },
   {
     title: 'Classic Sherwani',
     category: 'Sherwanis',
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=400&q=80',
+    image: sherwaniImage,
     points: 180,
     condition: 'Good'
   },
   {
     title: 'Traditional Jootis',
     category: 'Jootis',
-    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80',
+    image: jhootimenImage,
     points: 80,
     condition: 'Excellent'
   },
   {
     title: 'Wedding Kurta Set',
     category: 'Kurtas',
-    image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80',
+    image: kurtaImage,
     points: 120,
     condition: 'Like New'
   },
+  {
+    title: 'Casual Ethnic Shoes',
+    category: 'Shoes',
+    image: casualshoesImage,
+    points: 60,
+    condition: 'Good'
+  },
+  {
+    title: 'Embroidered Dupatta',
+    category: 'Dupattas',
+    image: imagesImage,
+    points: 45,
+    condition: 'Like New'
+  },
+  {
+    title: 'Silk Wedding Saree',
+    category: 'Sarees',
+    image: sareeImage,
+    points: 175,
+    condition: 'Excellent'
+  }
 ];
 
 const stats = [
@@ -119,7 +148,7 @@ export default function LandingPage() {
             </div>
             <div className="hero-image">
               <img 
-                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" 
+                src={sareeImage}
                 alt="Indian Fashion Collection" 
               />
             </div>

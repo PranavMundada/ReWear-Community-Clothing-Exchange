@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Register.css';
 
+// Import app logo
+import appLogo from '../assets/applogo.png';
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -48,7 +51,7 @@ const Register = () => {
       <div className="auth-container">
         <div className="auth-header">
           <div className="auth-logo">
-            <span className="logo-icon">🥻</span>
+            <img src={appLogo} alt="ReWear Logo" className="logo-image" />
             <h1>ReWear</h1>
           </div>
           <h2>Join Our Community!</h2>

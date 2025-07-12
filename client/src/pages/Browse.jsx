@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+// Import local assets
+import sareeImage from '../assets/saree.jpg';
+import sherwaniImage from '../assets/sherwani.jpg';
+import kurtaImage from '../assets/kurta.jpg';
+import imagesImage from '../assets/images.jpg';
+import casualshoesImage from '../assets/casualshoes.jpg';
+import jhootimenImage from '../assets/jhootimen.jpg';
+
 const Browse = () => {
   const { user, apiCall } = useAuth();
   const [items, setItems] = useState([]);
@@ -12,8 +20,8 @@ const Browse = () => {
   const [selectedSize, setSelectedSize] = useState('all');
   const [selectedCondition, setSelectedCondition] = useState('all');
 
-  // Updated to match your backend model
-  const categories = ['all', 'clothing', 'shoes', 'accessories', 'bags', 'jewelry', 'electronics', 'books', 'home', 'other'];
+  // Updated to match Indian clothing categories
+  const categories = ['all', 'sarees', 'lehengas', 'sherwanis', 'kurtas', 'jootis', 'dupattas', 'shoes', 'accessories', 'other'];
   const sizes = ['all', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'One Size', 'Other'];
   const conditions = ['all', 'new', 'like-new', 'good', 'fair', 'vintage'];
 
@@ -45,99 +53,283 @@ const Browse = () => {
   };
 
   const loadSampleData = () => {
-    // Sample data matching your backend model structure
+    // Extended sample data with more Indian clothing items
     const sampleItems = [
       {
         _id: '1',
-        title: "Vintage Denim Jacket",
-        description: "Classic vintage denim jacket in great condition",
-        category: "clothing",
-        type: "jacket",
-        size: "M",
-        condition: "good",
-        color: "Blue",
-        brand: "Levi's",
-        images: ["https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=300&fit=crop"],
+        title: "Red Bridal Saree",
+        description: "Beautiful red bridal saree in excellent condition",
+        category: "sarees",
+        type: "saree",
+        size: "One Size",
+        condition: "like-new",
+        color: "Red",
+        brand: "Traditional",
+        images: [sareeImage],
         status: "available",
         owner: { 
           _id: "user1",
-          name: "Sarah M.",
+          name: "Priya M.",
           photo: "default.jpg"
         },
-        pointsValue: 35,
+        pointsValue: 150,
         views: 24,
         favorited: 3,
-        location: { city: "New York", state: "NY", country: "US" },
+        location: { city: "Mumbai", state: "Maharashtra", country: "India" },
         createdAt: new Date('2024-01-15')
       },
       {
         _id: '2',
-        title: "Summer Floral Dress",
-        description: "Beautiful floral summer dress, perfect for warm weather",
-        category: "clothing",
-        type: "dress",
-        size: "S",
+        title: "Designer Lehenga",
+        description: "Stunning designer lehenga perfect for special occasions",
+        category: "lehengas",
+        type: "lehenga",
+        size: "M",
         condition: "like-new",
         color: "Pink",
-        brand: "Zara",
-        images: ["https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=300&fit=crop"],
+        brand: "Designer",
+        images: [imagesImage],
         status: "available",
         owner: { 
           _id: "user2",
-          name: "Emma K.",
+          name: "Anjali K.",
           photo: "default.jpg"
         },
-        pointsValue: 45,
+        pointsValue: 200,
         views: 18,
         favorited: 7,
-        location: { city: "Los Angeles", state: "CA", country: "US" },
+        location: { city: "Delhi", state: "Delhi", country: "India" },
         createdAt: new Date('2024-01-10')
       },
       {
         _id: '3',
-        title: "Classic Black Boots",
-        description: "Comfortable black leather boots, great for any occasion",
-        category: "shoes",
-        type: "boots",
-        size: "8",
+        title: "Classic Sherwani",
+        description: "Elegant sherwani for wedding ceremonies",
+        category: "sherwanis",
+        type: "sherwani",
+        size: "L",
         condition: "good",
         color: "Black",
-        brand: "Dr. Martens",
-        images: ["https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=300&h=300&fit=crop"],
+        brand: "Traditional",
+        images: [sherwaniImage],
         status: "available",
         owner: { 
           _id: "user3",
-          name: "Alex R.",
+          name: "Rahul R.",
           photo: "default.jpg"
         },
-        pointsValue: 42,
+        pointsValue: 180,
         views: 31,
         favorited: 5,
-        location: { city: "Chicago", state: "IL", country: "US" },
+        location: { city: "Bangalore", state: "Karnataka", country: "India" },
         createdAt: new Date('2024-01-08')
       },
       {
         _id: '4',
-        title: "Cozy Knit Sweater",
-        description: "Soft knit sweater in excellent condition",
-        category: "clothing",
-        type: "sweater",
-        size: "L",
+        title: "Wedding Kurta Set",
+        description: "Comfortable kurta set for casual and formal wear",
+        category: "kurtas",
+        type: "kurta",
+        size: "M",
         condition: "like-new",
         color: "Cream",
-        brand: "H&M",
-        images: ["https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300&h=300&fit=crop"],
+        brand: "Ethnic",
+        images: [kurtaImage],
         status: "available",
         owner: { 
           _id: "user4",
-          name: "Mike T.",
+          name: "Arjun T.",
+          photo: "default.jpg"
+        },
+        pointsValue: 120,
+        views: 12,
+        favorited: 2,
+        location: { city: "Chennai", state: "Tamil Nadu", country: "India" },
+        createdAt: new Date('2024-01-05')
+      },
+      {
+        _id: '5',
+        title: "Traditional Jootis",
+        description: "Handcrafted traditional jootis in excellent condition",
+        category: "jootis",
+        type: "jootis",
+        size: "8",
+        condition: "excellent",
+        color: "Brown",
+        brand: "Handcrafted",
+        images: [jhootimenImage],
+        status: "available",
+        owner: { 
+          _id: "user5",
+          name: "Vikram S.",
+          photo: "default.jpg"
+        },
+        pointsValue: 80,
+        views: 15,
+        favorited: 4,
+        location: { city: "Jaipur", state: "Rajasthan", country: "India" },
+        createdAt: new Date('2024-01-12')
+      },
+      {
+        _id: '6',
+        title: "Casual Ethnic Shoes",
+        description: "Comfortable casual ethnic shoes for daily wear",
+        category: "shoes",
+        type: "casual",
+        size: "9",
+        condition: "good",
+        color: "Black",
+        brand: "Ethnic",
+        images: [casualshoesImage],
+        status: "available",
+        owner: { 
+          _id: "user6",
+          name: "Neha P.",
+          photo: "default.jpg"
+        },
+        pointsValue: 60,
+        views: 22,
+        favorited: 1,
+        location: { city: "Pune", state: "Maharashtra", country: "India" },
+        createdAt: new Date('2024-01-14')
+      },
+      {
+        _id: '7',
+        title: "Silk Wedding Saree",
+        description: "Luxurious silk wedding saree with intricate work",
+        category: "sarees",
+        type: "saree",
+        size: "One Size",
+        condition: "excellent",
+        color: "Gold",
+        brand: "Luxury",
+        images: [sareeImage],
+        status: "available",
+        owner: { 
+          _id: "user7",
+          name: "Meera L.",
+          photo: "default.jpg"
+        },
+        pointsValue: 175,
+        views: 28,
+        favorited: 8,
+        location: { city: "Hyderabad", state: "Telangana", country: "India" },
+        createdAt: new Date('2024-01-03')
+      },
+      {
+        _id: '8',
+        title: "Embroidered Dupatta",
+        description: "Beautiful embroidered dupatta with mirror work",
+        category: "dupattas",
+        type: "dupatta",
+        size: "One Size",
+        condition: "like-new",
+        color: "Green",
+        brand: "Traditional",
+        images: [imagesImage],
+        status: "available",
+        owner: { 
+          _id: "user8",
+          name: "Kavya R.",
           photo: "default.jpg"
         },
         pointsValue: 45,
-        views: 12,
+        views: 19,
+        favorited: 3,
+        location: { city: "Ahmedabad", state: "Gujarat", country: "India" },
+        createdAt: new Date('2024-01-07')
+      },
+      {
+        _id: '9',
+        title: "Designer Sherwani",
+        description: "Modern designer sherwani with contemporary style",
+        category: "sherwanis",
+        type: "sherwani",
+        size: "XL",
+        condition: "new",
+        color: "Navy Blue",
+        brand: "Designer",
+        images: [sherwaniImage],
+        status: "available",
+        owner: { 
+          _id: "user9",
+          name: "Aditya M.",
+          photo: "default.jpg"
+        },
+        pointsValue: 220,
+        views: 35,
+        favorited: 12,
+        location: { city: "Kolkata", state: "West Bengal", country: "India" },
+        createdAt: new Date('2024-01-01')
+      },
+      {
+        _id: '10',
+        title: "Cotton Kurta Set",
+        description: "Comfortable cotton kurta set for daily wear",
+        category: "kurtas",
+        type: "kurta",
+        size: "L",
+        condition: "good",
+        color: "White",
+        brand: "Comfort",
+        images: [kurtaImage],
+        status: "available",
+        owner: { 
+          _id: "user10",
+          name: "Riya S.",
+          photo: "default.jpg"
+        },
+        pointsValue: 85,
+        views: 16,
         favorited: 2,
-        location: { city: "Austin", state: "TX", country: "US" },
-        createdAt: new Date('2024-01-05')
+        location: { city: "Indore", state: "Madhya Pradesh", country: "India" },
+        createdAt: new Date('2024-01-09')
+      },
+      {
+        _id: '11',
+        title: "Bridal Lehenga Set",
+        description: "Complete bridal lehenga set with jewelry",
+        category: "lehengas",
+        type: "lehenga",
+        size: "S",
+        condition: "excellent",
+        color: "Red",
+        brand: "Bridal",
+        images: [imagesImage],
+        status: "available",
+        owner: { 
+          _id: "user11",
+          name: "Zara K.",
+          photo: "default.jpg"
+        },
+        pointsValue: 250,
+        views: 42,
+        favorited: 15,
+        location: { city: "Lucknow", state: "Uttar Pradesh", country: "India" },
+        createdAt: new Date('2024-01-02')
+      },
+      {
+        _id: '12',
+        title: "Traditional Jootis",
+        description: "Classic traditional jootis with embroidery",
+        category: "jootis",
+        type: "jootis",
+        size: "7",
+        condition: "good",
+        color: "Black",
+        brand: "Heritage",
+        images: [jhootimenImage],
+        status: "available",
+        owner: { 
+          _id: "user12",
+          name: "Amit P.",
+          photo: "default.jpg"
+        },
+        pointsValue: 70,
+        views: 14,
+        favorited: 1,
+        location: { city: "Varanasi", state: "Uttar Pradesh", country: "India" },
+        createdAt: new Date('2024-01-11')
       }
     ];
     
@@ -401,27 +593,19 @@ const Browse = () => {
             <div className="text-6xl mb-4">🔍</div>
             <h3 className="text-2xl font-bold text-gray-800 mb-2">No items found</h3>
             <p className="text-gray-500 text-lg mb-6">
-              No items match your current search criteria.
+              Try adjusting your search criteria or filters.
             </p>
-            <div className="flex gap-3 justify-center">
-              <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedCategory('all');
-                  setSelectedSize('all');
-                  setSelectedCondition('all');
-                }}
-                className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
-              >
-                Clear Filters
-              </button>
-              <Link
-                to="/add-item"
-                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-colors"
-              >
-                Add the First Item!
-              </Link>
-            </div>
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+                setSelectedSize('all');
+                setSelectedCondition('all');
+              }}
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+            >
+              Clear All Filters
+            </button>
           </div>
         )}
       </div>

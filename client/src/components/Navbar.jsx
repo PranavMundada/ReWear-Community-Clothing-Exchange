@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
+// Import app logo
+import appLogo from '../assets/applogo.png';
+
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -40,7 +43,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="navbar-brand">
           <div className="brand-logo">
-            <span className="logo-icon">🥻</span>
+            <img src={appLogo} alt="ReWear Logo" className="logo-image" />
             <span className="logo-text">ReWear</span>
           </div>
         </Link>
