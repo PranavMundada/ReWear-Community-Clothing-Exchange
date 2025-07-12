@@ -20,7 +20,7 @@ import AddItem from './pages/AddItem';
 import MyItems from './pages/MyItems';
 import Swaps from './pages/Swaps';
 import Profile from './pages/Profile';
-import Favorites from './pages/Favorites';
+import Favorites from './pages/Favourites';
 import AdminPanel from './pages/AdminPanel';
 import NotFound from './pages/NotFound';
 
