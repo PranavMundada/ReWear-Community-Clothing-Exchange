@@ -1,89 +1,177 @@
-import { createContext, useContext, useState, useEffect } from 'react'
-import axios from 'axios'
+import { createContext, useContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 export const useAuth = () => {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    throw new Error('useAuth must be used within an AuthProvider');
   }
-  return context
-}
+  return context;
+};
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
 
+  // Check authentication status on mount
   useEffect(() => {
-    // Check if user is logged in on app start
-    const token = localStorage.getItem('token')
-    if (token) {
-      checkAuthStatus()
-    } else {
-      setLoading(false)
-    }
-  }, [])
-
-  const checkAuthStatus = async () => {
-    try {
-      const token = localStorage.getItem('token')
+    const checkAuth = async () => {
       if (token) {
-        const response = await axios.get('http://localhost:5000/api/users/me', {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        setUser(response.data)
+        try {
+          const response = await fetch('/api/users/me', {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            setUser(data.data.user);
+          } else {
+            // Token is invalid
+            localStorage.removeItem('token');
+            setToken(null);
+          }
+        } catch (error) {
+          console.error('Auth check failed:', error);
+          localStorage.removeItem('token');
+          setToken(null);
+        }
       }
-    } catch (error) {
-      localStorage.removeItem('token')
-    } finally {
-      setLoading(false)
-    }
-  }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, [token]);
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', {
-        email,
-        password
-      })
-      const { token, user } = response.data
-      localStorage.setItem('token', token)
-      setUser(user)
-      return { success: true }
+      setLoading(true);
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setUser(data.data.user);
+        setToken(data.token);
+        localStorage.setItem('token', data.token);
+        return { success: true, user: data.data.user };
+      } else {
+        return { success: false, error: data.message || 'Login failed' };
+      }
     } catch (error) {
-      return { success: false, error: error.response?.data?.message || 'Login failed' }
+      console.error('Login error:', error);
+      return { success: false, error: 'Network error. Please try again.' };
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', userData)
-      const { token, user } = response.data
-      localStorage.setItem('token', token)
-      setUser(user)
-      return { success: true }
+      setLoading(true);
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setUser(data.data.user);
+        setToken(data.token);
+        localStorage.setItem('token', data.token);
+        return { success: true, user: data.data.user };
+      } else {
+        return { success: false, error: data.message || 'Registration failed' };
+      }
     } catch (error) {
-      return { success: false, error: error.response?.data?.message || 'Registration failed' }
+      console.error('Registration error:', error);
+      return { success: false, error: 'Network error. Please try again.' };
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   const logout = () => {
-    localStorage.removeItem('token')
-    setUser(null)
-  }
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
+  };
+
+  const updateUser = (userData) => {
+    setUser(prevUser => ({ ...prevUser, ...userData }));
+  };
+
+  const refreshUser = async () => {
+    if (!token) return;
+    
+    try {
+      const response = await fetch('/api/users/me', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.data.user);
+      }
+    } catch (error) {
+      console.error('Failed to refresh user data:', error);
+    }
+  };
+
+  // API helper function
+  const apiCall = async (url, options = {}) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` }),
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    const response = await fetch(url, config);
+    
+    if (response.status === 401) {
+      // Token expired or invalid
+      logout();
+      throw new Error('Authentication required');
+    }
+    
+    return response;
+  };
 
   const value = {
     user,
+    token,
+    loading,
     login,
     register,
     logout,
-    loading
-  }
+    updateUser,
+    refreshUser,
+    apiCall,
+    isAuthenticated: !!user,
+    isAdmin: user?.role === 'admin',
+  };
 
   return (
     <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
-  )
-} 
+  );
+};
