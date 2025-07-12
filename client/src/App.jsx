@@ -43,7 +43,7 @@ const AppContent = () => {
   return (
     <div className="App">
       <Navbar />
-      <main className="main-content">
+      <main className="main-content" style={{ paddingTop: '80px' }}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />

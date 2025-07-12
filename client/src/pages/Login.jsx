@@ -1,113 +1,139 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import './Login.css'
-
-const sareeEmoji = '🥻'; // Unicode for saree
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import './Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  
-  const { login } = useAuth()
-  const navigate = useNavigate()
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
-      const result = await login(formData.email, formData.password)
-      if (result.success) {
-        navigate('/dashboard')
-      } else {
-        setError(result.error)
-      }
+      await login(formData.email, formData.password);
+      navigate('/dashboard');
     } catch (err) {
-      setError('An unexpected error occurred')
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <div className="login-card">
-          <div className="login-avatar">
-            <span className="avatar-icon" aria-label="Saree" role="img">{sareeEmoji}</span>
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-header">
+          <div className="auth-logo">
+            <span className="logo-icon">🥻</span>
+            <h1>ReWear</h1>
           </div>
-          <div className="login-header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to your ReWear account</p>
+          <h2>Welcome Back!</h2>
+          <p>Sign in to continue your sustainable fashion journey</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">
+              <span className="label-icon">📧</span>
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">
+              <span className="label-icon">🔒</span>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="Enter your password"
+              required
+            />
           </div>
 
           {error && (
             <div className="error-message">
+              <span className="error-icon">⚠️</span>
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="login-form">
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Enter your email"
-              />
-            </div>
+          <button 
+            type="submit" 
+            className="auth-button"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span className="loading-spinner"></span>
+                Signing In...
+              </>
+            ) : (
+              <>
+                <span className="btn-icon">🚀</span>
+                Sign In
+              </>
+            )}
+          </button>
+        </form>
 
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder="Enter your password"
-              />
-            </div>
+        <div className="auth-footer">
+          <p>Don't have an account? 
+            <Link to="/register" className="link-button">
+              <span className="link-icon">✨</span>
+              Sign Up
+            </Link>
+          </p>
+        </div>
 
-            <button 
-              type="submit" 
-              className="btn btn-primary btn-full"
-              disabled={loading}
-            >
-              {loading ? 'Signing In...' : 'Sign In'}
-            </button>
-          </form>
-
-          <div className="login-footer">
-            <p>
-              Don't have an account?{' '}
-              <Link to="/register" className="link">
-                Sign up here
-              </Link>
-            </p>
+        <div className="auth-features">
+          <div className="feature-item">
+            <span className="feature-icon">🔄</span>
+            <span>Swap Indian Fashion</span>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">🌱</span>
+            <span>Sustainable Choices</span>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">💎</span>
+            <span>Earn Points</span>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login 
+export default Login; 
