@@ -8,6 +8,6 @@ through direct swaps or a point-based redemption system. The goal is to promote 
 fashion and reduce textile waste by encouraging users to reuse wearable garments instead of
 discarding them.
 
-Team Name-
+Team Name-Florist
 
-Team Email Address- pjmundada2005@gmail.com
+Team Email Address- samarmittal59@gmail.com
