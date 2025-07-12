@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same!',
     },
   },
+  points: {
+  type: Number,
+  default: 100, // Starting points
+},
+
 });
 
 userSchema.pre("save", async function (next) {

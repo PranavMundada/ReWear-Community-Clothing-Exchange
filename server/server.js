@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import userRouter from "./routes/userRoute.js"
 import itemRoutes from "./routes/itemRoutes.js"
+import swapRoutes from "./routes/swapRoutes.js";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -25,3 +26,4 @@ mongoose.connect(process.env.MONGO_URI.replace('<db_password>',process.env.DB_PA
 // Sample route
 app.use("/api/users",userRouter);
 app.use('/api/items', itemRoutes);
+app.use('/api/swap', swapRoutes);
